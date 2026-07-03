@@ -106,7 +106,7 @@ function HomePage() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button asChild size="lg">
-                  <Link to="/find-ngos">
+                  <Link to="/find-support">
                     Find help <ArrowRight className="ml-1.5 h-4 w-4" />
                   </Link>
                 </Button>
@@ -249,7 +249,7 @@ function HomePage() {
         subtitle="A curated selection from across Sahay's growing network."
         action={
           <Button asChild variant="outline">
-            <Link to="/find-ngos">Browse all NGOs</Link>
+            <Link to="/find-support">Browse all NGOs</Link>
           </Button>
         }
       >
