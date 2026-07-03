@@ -16,10 +16,15 @@ import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRegisterRouteImport } from './routes/auth.register'
 import { Route as AuthLoginRouteImport } from './routes/auth.login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-password'
+import { Route as AuthenticatedDashboardNgoRouteImport } from './routes/_authenticated/dashboard.ngo'
+import { Route as AuthenticatedDashboardLawyerRouteImport } from './routes/_authenticated/dashboard.lawyer'
+import { Route as AuthenticatedDashboardCitizenRouteImport } from './routes/_authenticated/dashboard.citizen'
+import { Route as AuthenticatedDashboardAdminRouteImport } from './routes/_authenticated/dashboard.admin'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -56,6 +61,10 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -76,6 +85,30 @@ const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthenticatedDashboardNgoRoute =
+  AuthenticatedDashboardNgoRouteImport.update({
+    id: '/dashboard/ngo',
+    path: '/dashboard/ngo',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardLawyerRoute =
+  AuthenticatedDashboardLawyerRouteImport.update({
+    id: '/dashboard/lawyer',
+    path: '/dashboard/lawyer',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardCitizenRoute =
+  AuthenticatedDashboardCitizenRouteImport.update({
+    id: '/dashboard/citizen',
+    path: '/dashboard/citizen',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardAdminRoute =
+  AuthenticatedDashboardAdminRouteImport.update({
+    id: '/dashboard/admin',
+    path: '/dashboard/admin',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +122,10 @@ export interface FileRoutesByFullPath {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
+  '/dashboard/citizen': typeof AuthenticatedDashboardCitizenRoute
+  '/dashboard/lawyer': typeof AuthenticatedDashboardLawyerRoute
+  '/dashboard/ngo': typeof AuthenticatedDashboardNgoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,10 +139,15 @@ export interface FileRoutesByTo {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
+  '/dashboard/citizen': typeof AuthenticatedDashboardCitizenRoute
+  '/dashboard/lawyer': typeof AuthenticatedDashboardLawyerRoute
+  '/dashboard/ngo': typeof AuthenticatedDashboardNgoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRouteWithChildren
   '/contact': typeof ContactRoute
@@ -116,6 +158,10 @@ export interface FileRoutesById {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
+  '/_authenticated/dashboard/citizen': typeof AuthenticatedDashboardCitizenRoute
+  '/_authenticated/dashboard/lawyer': typeof AuthenticatedDashboardLawyerRoute
+  '/_authenticated/dashboard/ngo': typeof AuthenticatedDashboardNgoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +177,10 @@ export interface FileRouteTypes {
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
+    | '/dashboard/admin'
+    | '/dashboard/citizen'
+    | '/dashboard/lawyer'
+    | '/dashboard/ngo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,9 +194,14 @@ export interface FileRouteTypes {
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
+    | '/dashboard/admin'
+    | '/dashboard/citizen'
+    | '/dashboard/lawyer'
+    | '/dashboard/ngo'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
     | '/auth'
     | '/contact'
@@ -157,10 +212,15 @@ export interface FileRouteTypes {
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
+    | '/_authenticated/dashboard/admin'
+    | '/_authenticated/dashboard/citizen'
+    | '/_authenticated/dashboard/lawyer'
+    | '/_authenticated/dashboard/ngo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRouteWithChildren
   ContactRoute: typeof ContactRoute
@@ -221,6 +281,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -249,8 +316,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_authenticated/dashboard/ngo': {
+      id: '/_authenticated/dashboard/ngo'
+      path: '/dashboard/ngo'
+      fullPath: '/dashboard/ngo'
+      preLoaderRoute: typeof AuthenticatedDashboardNgoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/lawyer': {
+      id: '/_authenticated/dashboard/lawyer'
+      path: '/dashboard/lawyer'
+      fullPath: '/dashboard/lawyer'
+      preLoaderRoute: typeof AuthenticatedDashboardLawyerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/citizen': {
+      id: '/_authenticated/dashboard/citizen'
+      path: '/dashboard/citizen'
+      fullPath: '/dashboard/citizen'
+      preLoaderRoute: typeof AuthenticatedDashboardCitizenRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/admin': {
+      id: '/_authenticated/dashboard/admin'
+      path: '/dashboard/admin'
+      fullPath: '/dashboard/admin'
+      preLoaderRoute: typeof AuthenticatedDashboardAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardAdminRoute: typeof AuthenticatedDashboardAdminRoute
+  AuthenticatedDashboardCitizenRoute: typeof AuthenticatedDashboardCitizenRoute
+  AuthenticatedDashboardLawyerRoute: typeof AuthenticatedDashboardLawyerRoute
+  AuthenticatedDashboardNgoRoute: typeof AuthenticatedDashboardNgoRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardAdminRoute: AuthenticatedDashboardAdminRoute,
+  AuthenticatedDashboardCitizenRoute: AuthenticatedDashboardCitizenRoute,
+  AuthenticatedDashboardLawyerRoute: AuthenticatedDashboardLawyerRoute,
+  AuthenticatedDashboardNgoRoute: AuthenticatedDashboardNgoRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface AuthRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
@@ -268,6 +380,7 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRouteWithChildren,
   ContactRoute: ContactRoute,
@@ -279,3 +392,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
