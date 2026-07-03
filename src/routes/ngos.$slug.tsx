@@ -129,7 +129,7 @@ function NgoProfile() {
             {ngo.services.length > 0 && (
               <Section title="Services offered">
                 <div className="flex flex-wrap gap-2">
-                  {ngo.services.map((s) => (
+                  {ngo.services.map((s: string) => (
                     <Badge key={s} variant="secondary" className="rounded-full bg-emerald/10 text-emerald hover:bg-emerald/15">
                       {s}
                     </Badge>
