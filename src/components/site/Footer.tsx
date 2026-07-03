@@ -28,7 +28,7 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-foreground">Quick Links</h4>
             <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              <li><Link to="/find-ngos" className="hover:text-foreground">Find NGOs</Link></li>
+              <li><Link to="/find-support" className="hover:text-foreground">Find Support</Link></li>
               <li><Link to="/find-lawyers" className="hover:text-foreground">Find Lawyers</Link></li>
               <li><Link to="/about" className="hover:text-foreground">About Us</Link></li>
               <li><Link to="/faqs" className="hover:text-foreground">FAQs</Link></li>

@@ -14,6 +14,240 @@ export type Database = {
   }
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          citizen_id: string | null
+          created_at: string
+          email: string | null
+          id: string
+          message: string | null
+          name: string
+          ngo_id: string
+          phone: string
+          preferred_date: string | null
+          preferred_time: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          citizen_id?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          name: string
+          ngo_id: string
+          phone: string
+          preferred_date?: string | null
+          preferred_time?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          citizen_id?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          name?: string
+          ngo_id?: string
+          phone?: string
+          preferred_date?: string | null
+          preferred_time?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      help_requests: {
+        Row: {
+          citizen_id: string | null
+          created_at: string
+          id: string
+          message: string
+          name: string
+          ngo_id: string
+          phone: string
+          status: string
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          citizen_id?: string | null
+          created_at?: string
+          id?: string
+          message: string
+          name: string
+          ngo_id: string
+          phone: string
+          status?: string
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          citizen_id?: string | null
+          created_at?: string
+          id?: string
+          message?: string
+          name?: string
+          ngo_id?: string
+          phone?: string
+          status?: string
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "help_requests_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ngo_gallery: {
+        Row: {
+          caption: string | null
+          created_at: string
+          id: string
+          image_url: string
+          ngo_id: string
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          image_url: string
+          ngo_id: string
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string
+          ngo_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ngo_gallery_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ngos: {
+        Row: {
+          address: string | null
+          category: string | null
+          city: string | null
+          contact_person: string | null
+          cover_url: string | null
+          created_at: string
+          description: string | null
+          email: string | null
+          emergency_support: boolean
+          google_maps_url: string | null
+          id: string
+          languages: string[]
+          latitude: number | null
+          logo_url: string | null
+          longitude: number | null
+          mission: string | null
+          name: string
+          nearby_landmark: string | null
+          owner_id: string | null
+          phone: string | null
+          pin_code: string | null
+          registration_number: string | null
+          services: string[]
+          slug: string
+          state: string | null
+          updated_at: string
+          verified: boolean
+          website: string | null
+          whatsapp: string | null
+          working_days: string | null
+          working_hours: string | null
+        }
+        Insert: {
+          address?: string | null
+          category?: string | null
+          city?: string | null
+          contact_person?: string | null
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          emergency_support?: boolean
+          google_maps_url?: string | null
+          id?: string
+          languages?: string[]
+          latitude?: number | null
+          logo_url?: string | null
+          longitude?: number | null
+          mission?: string | null
+          name: string
+          nearby_landmark?: string | null
+          owner_id?: string | null
+          phone?: string | null
+          pin_code?: string | null
+          registration_number?: string | null
+          services?: string[]
+          slug: string
+          state?: string | null
+          updated_at?: string
+          verified?: boolean
+          website?: string | null
+          whatsapp?: string | null
+          working_days?: string | null
+          working_hours?: string | null
+        }
+        Update: {
+          address?: string | null
+          category?: string | null
+          city?: string | null
+          contact_person?: string | null
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          emergency_support?: boolean
+          google_maps_url?: string | null
+          id?: string
+          languages?: string[]
+          latitude?: number | null
+          logo_url?: string | null
+          longitude?: number | null
+          mission?: string | null
+          name?: string
+          nearby_landmark?: string | null
+          owner_id?: string | null
+          phone?: string | null
+          pin_code?: string | null
+          registration_number?: string | null
+          services?: string[]
+          slug?: string
+          state?: string | null
+          updated_at?: string
+          verified?: boolean
+          website?: string | null
+          whatsapp?: string | null
+          working_days?: string | null
+          working_hours?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string

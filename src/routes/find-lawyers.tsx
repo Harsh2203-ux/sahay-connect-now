@@ -4,7 +4,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { LawyerCard, type Lawyer } from "@/components/site/LawyerCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { PageHero } from "./find-ngos";
+import { PageHero } from "@/components/site/PageHero";
 
 export const Route = createFileRoute("/find-lawyers")({
   head: () => ({

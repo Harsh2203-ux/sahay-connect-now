@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Target, Users, Heart, ShieldCheck } from "lucide-react";
-import { PageHero } from "./find-ngos";
+import { PageHero } from "@/components/site/PageHero";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
