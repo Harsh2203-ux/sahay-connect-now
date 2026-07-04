@@ -20,9 +20,11 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NgosSlugRouteImport } from './routes/ngos.$slug'
+import { Route as LawyersSlugRouteImport } from './routes/lawyers.$slug'
 import { Route as AuthRegisterRouteImport } from './routes/auth.register'
 import { Route as AuthLoginRouteImport } from './routes/auth.login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-password'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedDashboardNgoRouteImport } from './routes/_authenticated/dashboard.ngo'
 import { Route as AuthenticatedDashboardLawyerRouteImport } from './routes/_authenticated/dashboard.lawyer'
 import { Route as AuthenticatedDashboardCitizenRouteImport } from './routes/_authenticated/dashboard.citizen'
@@ -82,6 +84,11 @@ const NgosSlugRoute = NgosSlugRouteImport.update({
   path: '/ngos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LawyersSlugRoute = LawyersSlugRouteImport.update({
+  id: '/lawyers/$slug',
+  path: '/lawyers/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -96,6 +103,11 @@ const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
   getParentRoute: () => AuthRoute,
+} as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedDashboardNgoRoute =
   AuthenticatedDashboardNgoRouteImport.update({
@@ -132,9 +144,11 @@ export interface FileRoutesByFullPath {
   '/find-ngos': typeof FindNgosRoute
   '/find-support': typeof FindSupportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/lawyers/$slug': typeof LawyersSlugRoute
   '/ngos/$slug': typeof NgosSlugRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/citizen': typeof AuthenticatedDashboardCitizenRoute
@@ -151,9 +165,11 @@ export interface FileRoutesByTo {
   '/find-ngos': typeof FindNgosRoute
   '/find-support': typeof FindSupportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/lawyers/$slug': typeof LawyersSlugRoute
   '/ngos/$slug': typeof NgosSlugRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/citizen': typeof AuthenticatedDashboardCitizenRoute
@@ -172,9 +188,11 @@ export interface FileRoutesById {
   '/find-ngos': typeof FindNgosRoute
   '/find-support': typeof FindSupportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/lawyers/$slug': typeof LawyersSlugRoute
   '/ngos/$slug': typeof NgosSlugRoute
   '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/_authenticated/dashboard/citizen': typeof AuthenticatedDashboardCitizenRoute
@@ -193,9 +211,11 @@ export interface FileRouteTypes {
     | '/find-ngos'
     | '/find-support'
     | '/reset-password'
+    | '/profile'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
+    | '/lawyers/$slug'
     | '/ngos/$slug'
     | '/dashboard/admin'
     | '/dashboard/citizen'
@@ -212,9 +232,11 @@ export interface FileRouteTypes {
     | '/find-ngos'
     | '/find-support'
     | '/reset-password'
+    | '/profile'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
+    | '/lawyers/$slug'
     | '/ngos/$slug'
     | '/dashboard/admin'
     | '/dashboard/citizen'
@@ -232,9 +254,11 @@ export interface FileRouteTypes {
     | '/find-ngos'
     | '/find-support'
     | '/reset-password'
+    | '/_authenticated/profile'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
+    | '/lawyers/$slug'
     | '/ngos/$slug'
     | '/_authenticated/dashboard/admin'
     | '/_authenticated/dashboard/citizen'
@@ -253,6 +277,7 @@ export interface RootRouteChildren {
   FindNgosRoute: typeof FindNgosRoute
   FindSupportRoute: typeof FindSupportRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  LawyersSlugRoute: typeof LawyersSlugRoute
   NgosSlugRoute: typeof NgosSlugRoute
 }
 
@@ -335,6 +360,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NgosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lawyers/$slug': {
+      id: '/lawyers/$slug'
+      path: '/lawyers/$slug'
+      fullPath: '/lawyers/$slug'
+      preLoaderRoute: typeof LawyersSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/register': {
       id: '/auth/register'
       path: '/register'
@@ -355,6 +387,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/forgot-password'
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof AuthRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard/ngo': {
       id: '/_authenticated/dashboard/ngo'
@@ -388,6 +427,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedDashboardAdminRoute: typeof AuthenticatedDashboardAdminRoute
   AuthenticatedDashboardCitizenRoute: typeof AuthenticatedDashboardCitizenRoute
   AuthenticatedDashboardLawyerRoute: typeof AuthenticatedDashboardLawyerRoute
@@ -395,6 +435,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedDashboardAdminRoute: AuthenticatedDashboardAdminRoute,
   AuthenticatedDashboardCitizenRoute: AuthenticatedDashboardCitizenRoute,
   AuthenticatedDashboardLawyerRoute: AuthenticatedDashboardLawyerRoute,
@@ -429,18 +470,9 @@ const rootRouteChildren: RootRouteChildren = {
   FindNgosRoute: FindNgosRoute,
   FindSupportRoute: FindSupportRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  LawyersSlugRoute: LawyersSlugRoute,
   NgosSlugRoute: NgosSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

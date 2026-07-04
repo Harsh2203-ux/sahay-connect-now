@@ -20,13 +20,15 @@ export type Database = {
           created_at: string
           email: string | null
           id: string
+          lawyer_id: string | null
           message: string | null
           name: string
-          ngo_id: string
+          ngo_id: string | null
           phone: string
           preferred_date: string | null
           preferred_time: string | null
           status: string
+          type: string
           updated_at: string
         }
         Insert: {
@@ -34,13 +36,15 @@ export type Database = {
           created_at?: string
           email?: string | null
           id?: string
+          lawyer_id?: string | null
           message?: string | null
           name: string
-          ngo_id: string
+          ngo_id?: string | null
           phone: string
           preferred_date?: string | null
           preferred_time?: string | null
           status?: string
+          type?: string
           updated_at?: string
         }
         Update: {
@@ -48,16 +52,25 @@ export type Database = {
           created_at?: string
           email?: string | null
           id?: string
+          lawyer_id?: string | null
           message?: string | null
           name?: string
-          ngo_id?: string
+          ngo_id?: string | null
           phone?: string
           preferred_date?: string | null
           preferred_time?: string | null
           status?: string
+          type?: string
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "appointments_lawyer_id_fkey"
+            columns: ["lawyer_id"]
+            isOneToOne: false
+            referencedRelation: "lawyers"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "appointments_ngo_id_fkey"
             columns: ["ngo_id"]
@@ -69,40 +82,55 @@ export type Database = {
       }
       help_requests: {
         Row: {
+          attachment_url: string | null
           citizen_id: string | null
           created_at: string
           id: string
+          issue_type: string | null
+          location: string | null
           message: string
           name: string
           ngo_id: string
           phone: string
           status: string
           subject: string
+          title: string | null
           updated_at: string
+          urgency: string
         }
         Insert: {
+          attachment_url?: string | null
           citizen_id?: string | null
           created_at?: string
           id?: string
+          issue_type?: string | null
+          location?: string | null
           message: string
           name: string
           ngo_id: string
           phone: string
           status?: string
           subject: string
+          title?: string | null
           updated_at?: string
+          urgency?: string
         }
         Update: {
+          attachment_url?: string | null
           citizen_id?: string | null
           created_at?: string
           id?: string
+          issue_type?: string | null
+          location?: string | null
           message?: string
           name?: string
           ngo_id?: string
           phone?: string
           status?: string
           subject?: string
+          title?: string | null
           updated_at?: string
+          urgency?: string
         }
         Relationships: [
           {
@@ -113,6 +141,111 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      lawyers: {
+        Row: {
+          about: string | null
+          achievements: string[]
+          available_days: string | null
+          available_time: string | null
+          bar_number: string | null
+          certificates: string[]
+          city: string | null
+          consultation_fee: number | null
+          created_at: string
+          email: string | null
+          emergency_consultation: boolean
+          experience_years: number
+          full_name: string
+          google_maps_url: string | null
+          id: string
+          languages: string[]
+          latitude: number | null
+          longitude: number | null
+          office_address: string | null
+          offline_consultation: boolean
+          online_consultation: boolean
+          owner_id: string | null
+          phone: string | null
+          photo_url: string | null
+          practice_since: number | null
+          qualification: string | null
+          slug: string
+          specializations: string[]
+          university: string | null
+          updated_at: string
+          verified: boolean
+          whatsapp: string | null
+        }
+        Insert: {
+          about?: string | null
+          achievements?: string[]
+          available_days?: string | null
+          available_time?: string | null
+          bar_number?: string | null
+          certificates?: string[]
+          city?: string | null
+          consultation_fee?: number | null
+          created_at?: string
+          email?: string | null
+          emergency_consultation?: boolean
+          experience_years?: number
+          full_name: string
+          google_maps_url?: string | null
+          id?: string
+          languages?: string[]
+          latitude?: number | null
+          longitude?: number | null
+          office_address?: string | null
+          offline_consultation?: boolean
+          online_consultation?: boolean
+          owner_id?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          practice_since?: number | null
+          qualification?: string | null
+          slug: string
+          specializations?: string[]
+          university?: string | null
+          updated_at?: string
+          verified?: boolean
+          whatsapp?: string | null
+        }
+        Update: {
+          about?: string | null
+          achievements?: string[]
+          available_days?: string | null
+          available_time?: string | null
+          bar_number?: string | null
+          certificates?: string[]
+          city?: string | null
+          consultation_fee?: number | null
+          created_at?: string
+          email?: string | null
+          emergency_consultation?: boolean
+          experience_years?: number
+          full_name?: string
+          google_maps_url?: string | null
+          id?: string
+          languages?: string[]
+          latitude?: number | null
+          longitude?: number | null
+          office_address?: string | null
+          offline_consultation?: boolean
+          online_consultation?: boolean
+          owner_id?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          practice_since?: number | null
+          qualification?: string | null
+          slug?: string
+          specializations?: string[]
+          university?: string | null
+          updated_at?: string
+          verified?: boolean
+          whatsapp?: string | null
+        }
+        Relationships: []
       }
       ngo_gallery: {
         Row: {
@@ -248,8 +381,44 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          kind: string
+          link: string | null
+          read: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          read?: boolean
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          read?: boolean
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          avatar_url: string | null
+          bio: string | null
+          city: string | null
           created_at: string
           full_name: string | null
           id: string
@@ -257,6 +426,9 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          city?: string | null
           created_at?: string
           full_name?: string | null
           id: string
@@ -264,6 +436,9 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          city?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
@@ -271,6 +446,106 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      reviews: {
+        Row: {
+          citizen_id: string
+          comment: string | null
+          created_at: string
+          id: string
+          lawyer_id: string | null
+          ngo_id: string | null
+          rating: number
+          updated_at: string
+        }
+        Insert: {
+          citizen_id: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          lawyer_id?: string | null
+          ngo_id?: string | null
+          rating: number
+          updated_at?: string
+        }
+        Update: {
+          citizen_id?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          lawyer_id?: string | null
+          ngo_id?: string | null
+          rating?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_lawyer_id_fkey"
+            columns: ["lawyer_id"]
+            isOneToOne: false
+            referencedRelation: "lawyers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      saved_lawyers: {
+        Row: {
+          created_at: string
+          lawyer_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          lawyer_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          lawyer_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_lawyers_lawyer_id_fkey"
+            columns: ["lawyer_id"]
+            isOneToOne: false
+            referencedRelation: "lawyers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      saved_ngos: {
+        Row: {
+          created_at: string
+          ngo_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          ngo_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          ngo_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_ngos_ngo_id_fkey"
+            columns: ["ngo_id"]
+            isOneToOne: false
+            referencedRelation: "ngos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
