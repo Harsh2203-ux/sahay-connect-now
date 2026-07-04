@@ -20,6 +20,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NgosSlugRouteImport } from './routes/ngos.$slug'
+import { Route as LawyersSlugRouteImport } from './routes/lawyers.$slug'
 import { Route as AuthRegisterRouteImport } from './routes/auth.register'
 import { Route as AuthLoginRouteImport } from './routes/auth.login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-password'
@@ -82,6 +83,11 @@ const NgosSlugRoute = NgosSlugRouteImport.update({
   path: '/ngos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LawyersSlugRoute = LawyersSlugRouteImport.update({
+  id: '/lawyers/$slug',
+  path: '/lawyers/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/lawyers/$slug': typeof LawyersSlugRoute
   '/ngos/$slug': typeof NgosSlugRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/citizen': typeof AuthenticatedDashboardCitizenRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/lawyers/$slug': typeof LawyersSlugRoute
   '/ngos/$slug': typeof NgosSlugRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/citizen': typeof AuthenticatedDashboardCitizenRoute
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/lawyers/$slug': typeof LawyersSlugRoute
   '/ngos/$slug': typeof NgosSlugRoute
   '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/_authenticated/dashboard/citizen': typeof AuthenticatedDashboardCitizenRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
+    | '/lawyers/$slug'
     | '/ngos/$slug'
     | '/dashboard/admin'
     | '/dashboard/citizen'
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
+    | '/lawyers/$slug'
     | '/ngos/$slug'
     | '/dashboard/admin'
     | '/dashboard/citizen'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
+    | '/lawyers/$slug'
     | '/ngos/$slug'
     | '/_authenticated/dashboard/admin'
     | '/_authenticated/dashboard/citizen'
@@ -253,6 +265,7 @@ export interface RootRouteChildren {
   FindNgosRoute: typeof FindNgosRoute
   FindSupportRoute: typeof FindSupportRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  LawyersSlugRoute: typeof LawyersSlugRoute
   NgosSlugRoute: typeof NgosSlugRoute
 }
 
@@ -333,6 +346,13 @@ declare module '@tanstack/react-router' {
       path: '/ngos/$slug'
       fullPath: '/ngos/$slug'
       preLoaderRoute: typeof NgosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lawyers/$slug': {
+      id: '/lawyers/$slug'
+      path: '/lawyers/$slug'
+      fullPath: '/lawyers/$slug'
+      preLoaderRoute: typeof LawyersSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/register': {
@@ -429,6 +449,7 @@ const rootRouteChildren: RootRouteChildren = {
   FindNgosRoute: FindNgosRoute,
   FindSupportRoute: FindSupportRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  LawyersSlugRoute: LawyersSlugRoute,
   NgosSlugRoute: NgosSlugRoute,
 }
 export const routeTree = rootRouteImport

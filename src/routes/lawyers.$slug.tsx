@@ -150,7 +150,7 @@ function LawyerProfile() {
             {lawyer.specializations.length > 0 && (
               <Section title="Specializations">
                 <div className="flex flex-wrap gap-2">
-                  {lawyer.specializations.map((s) => (
+                  {lawyer.specializations.map((s: string) => (
                     <Badge key={s} variant="secondary" className="rounded-full bg-primary/10 text-primary hover:bg-primary/15">{s}</Badge>
                   ))}
                 </div>
@@ -167,10 +167,10 @@ function LawyerProfile() {
             {(lawyer.certificates.length > 0 || lawyer.achievements.length > 0) && (
               <Section title="Certificates & achievements">
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  {lawyer.certificates.map((c) => (
+                  {lawyer.certificates.map((c: string) => (
                     <li key={`c-${c}`} className="flex items-start gap-2"><Award className="mt-0.5 h-4 w-4 text-primary" />{c}</li>
                   ))}
-                  {lawyer.achievements.map((c) => (
+                  {lawyer.achievements.map((c: string) => (
                     <li key={`a-${c}`} className="flex items-start gap-2"><Award className="mt-0.5 h-4 w-4 text-emerald" />{c}</li>
                   ))}
                 </ul>
