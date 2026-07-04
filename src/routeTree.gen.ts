@@ -24,6 +24,7 @@ import { Route as LawyersSlugRouteImport } from './routes/lawyers.$slug'
 import { Route as AuthRegisterRouteImport } from './routes/auth.register'
 import { Route as AuthLoginRouteImport } from './routes/auth.login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-password'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedDashboardNgoRouteImport } from './routes/_authenticated/dashboard.ngo'
 import { Route as AuthenticatedDashboardLawyerRouteImport } from './routes/_authenticated/dashboard.lawyer'
 import { Route as AuthenticatedDashboardCitizenRouteImport } from './routes/_authenticated/dashboard.citizen'
@@ -103,6 +104,11 @@ const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardNgoRoute =
   AuthenticatedDashboardNgoRouteImport.update({
     id: '/dashboard/ngo',
@@ -138,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/find-ngos': typeof FindNgosRoute
   '/find-support': typeof FindSupportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/find-ngos': typeof FindNgosRoute
   '/find-support': typeof FindSupportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -180,6 +188,7 @@ export interface FileRoutesById {
   '/find-ngos': typeof FindNgosRoute
   '/find-support': typeof FindSupportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -202,6 +211,7 @@ export interface FileRouteTypes {
     | '/find-ngos'
     | '/find-support'
     | '/reset-password'
+    | '/profile'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
@@ -222,6 +232,7 @@ export interface FileRouteTypes {
     | '/find-ngos'
     | '/find-support'
     | '/reset-password'
+    | '/profile'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
@@ -243,6 +254,7 @@ export interface FileRouteTypes {
     | '/find-ngos'
     | '/find-support'
     | '/reset-password'
+    | '/_authenticated/profile'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
@@ -376,6 +388,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard/ngo': {
       id: '/_authenticated/dashboard/ngo'
       path: '/dashboard/ngo'
@@ -408,6 +427,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedDashboardAdminRoute: typeof AuthenticatedDashboardAdminRoute
   AuthenticatedDashboardCitizenRoute: typeof AuthenticatedDashboardCitizenRoute
   AuthenticatedDashboardLawyerRoute: typeof AuthenticatedDashboardLawyerRoute
@@ -415,6 +435,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedDashboardAdminRoute: AuthenticatedDashboardAdminRoute,
   AuthenticatedDashboardCitizenRoute: AuthenticatedDashboardCitizenRoute,
   AuthenticatedDashboardLawyerRoute: AuthenticatedDashboardLawyerRoute,
