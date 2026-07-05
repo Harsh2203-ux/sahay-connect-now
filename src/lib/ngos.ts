@@ -74,7 +74,7 @@ export function distanceKm(
 const LOGO_BUCKET = "image";
 const SIGN_TTL = 60 * 60; // 1 hour
 
-function extractStoragePath(value: string | null): string | null {
+export function extractStoragePath(value: string | null): string | null {
   if (!value) return null;
   // If it's already just a path/filename, return as-is
   if (!/^https?:\/\//i.test(value)) return value;
