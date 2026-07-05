@@ -46,6 +46,16 @@ function slugify(s: string) {
   return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="grid gap-1.5">
+      <Label className="text-xs">{label}</Label>
+      {children}
+    </div>
+  );
+}
+
+
 function NGODashboard() {
   const { user } = useSession();
   const qc = useQueryClient();
