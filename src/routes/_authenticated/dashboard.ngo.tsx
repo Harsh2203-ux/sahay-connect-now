@@ -294,8 +294,9 @@ function ProfileForm({ ngo, onSaved }: { ngo: NgoRow; onSaved: () => void }) {
         emergency_support: f.emergency_support,
         languages: f.languages,
         nearby_landmark: f.nearby_landmark,
-        logo_url: f.logo_url,
-        cover_url: f.cover_url,
+        logo_url: extractStoragePath(f.logo_url),
+        cover_url: extractStoragePath(f.cover_url),
+
       })
       .eq("id", ngo.id);
     setSaving(false);
