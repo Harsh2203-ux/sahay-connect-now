@@ -294,12 +294,8 @@ function ProfileForm({ ngo, onSaved }: { ngo: NgoRow; onSaved: () => void }) {
     onSaved();
   }
 
-  const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
-    <div className="grid gap-1.5">
-      <Label className="text-xs">{label}</Label>
-      {children}
-    </div>
-  );
+
+
 
   return (
     <Panel title="NGO profile">
