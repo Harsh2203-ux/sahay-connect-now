@@ -31,7 +31,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/auth";
-import { fetchMyNgo, NGO_SERVICE_OPTIONS, type NgoRow } from "@/lib/ngos";
+import { fetchMyNgo, NGO_SERVICE_OPTIONS, extractStoragePath, type NgoRow } from "@/lib/ngos";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/dashboard/ngo")({
