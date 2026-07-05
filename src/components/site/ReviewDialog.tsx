@@ -41,25 +41,42 @@ export function ReviewDialog({
       return;
     }
     setLoading(true);
-    const payload: {
-      citizen_id: string;
-      rating: number;
-      comment: string | null;
-      ngo_id?: string;
-      lawyer_id?: string;
-    } = {
-      citizen_id: user.id,
-      rating,
-      comment: comment || null,
-    };
-    if (target.kind === "ngo") payload.ngo_id = target.id;
-    else payload.lawyer_id = target.id;
+    const targetCol = target.kind === "ngo" ? "ngo_id" : "lawyer_id";
 
-    const { error } = await supabase.from("reviews").upsert(payload, {
-      onConflict: target.kind === "ngo" ? "citizen_id,ngo_id" : "citizen_id,lawyer_id",
-    });
+    const { data: existing, error: fetchErr } = await supabase
+      .from("reviews")
+      .select("id")
+      .eq("citizen_id", user.id)
+      .eq(targetCol, target.id)
+      .maybeSingle();
+
+    if (fetchErr) {
+      setLoading(false);
+      return toast.error(fetchErr.message);
+    }
+
+    let error;
+    if (existing) {
+      ({ error } = await supabase
+        .from("reviews")
+        .update({ rating, comment: comment || null })
+        .eq("id", existing.id));
+    } else {
+      const payload: {
+        citizen_id: string;
+        rating: number;
+        comment: string | null;
+        ngo_id?: string;
+        lawyer_id?: string;
+      } = { citizen_id: user.id, rating, comment: comment || null };
+      if (target.kind === "ngo") payload.ngo_id = target.id;
+      else payload.lawyer_id = target.id;
+      ({ error } = await supabase.from("reviews").insert(payload));
+    }
+
     setLoading(false);
     if (error) return toast.error(error.message);
+
     toast.success("Review submitted");
     onOpenChange(false);
     setComment("");
