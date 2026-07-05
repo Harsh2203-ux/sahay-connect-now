@@ -38,6 +38,11 @@ const nav: NavItem[] = [
   { to: "/profile", label: "My Profile", icon: SettingsIcon },
 ];
 
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return <div className="grid gap-1.5"><Label className="text-xs">{label}</Label>{children}</div>;
+}
+
+
 function LawyerDashboard() {
   const { user } = useSession();
   const qc = useQueryClient();
@@ -236,9 +241,8 @@ function ProfileForm({ lawyer, onSaved }: { lawyer: LawyerRow; onSaved: () => vo
     onSaved();
   }
 
-  const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
-    <div className="grid gap-1.5"><Label className="text-xs">{label}</Label>{children}</div>
-  );
+
+
 
   return (
     <Panel title="Lawyer profile">
