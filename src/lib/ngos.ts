@@ -71,13 +71,64 @@ export function distanceKm(
   return 2 * R * Math.asin(Math.sqrt(s));
 }
 
+const LOGO_BUCKET = "image";
+const SIGN_TTL = 60 * 60; // 1 hour
+
+export function extractStoragePath(value: string | null): string | null {
+  if (!value) return null;
+  // If it's already just a path/filename, return as-is
+  if (!/^https?:\/\//i.test(value)) return value;
+  // Extract from signed or public storage URL: /object/(sign|public)/<bucket>/<path>?...
+  const m = value.match(new RegExp(`/object/(?:sign|public)/${LOGO_BUCKET}/([^?]+)`));
+  if (!m) return null;
+  try {
+    return decodeURIComponent(m[1]);
+  } catch {
+    return m[1];
+  }
+}
+
+async function signStoragePaths(paths: string[]): Promise<Record<string, string>> {
+  const unique = Array.from(new Set(paths.filter(Boolean)));
+  if (unique.length === 0) return {};
+  const { data, error } = await supabase.storage
+    .from(LOGO_BUCKET)
+    .createSignedUrls(unique, SIGN_TTL);
+  if (error || !data) return {};
+  const map: Record<string, string> = {};
+  data.forEach((entry, i) => {
+    const key = unique[i];
+    if (entry.signedUrl) map[key] = entry.signedUrl;
+  });
+  return map;
+}
+
+async function resolveNgoImages<T extends { logo_url: string | null; cover_url: string | null }>(
+  rows: T[],
+): Promise<T[]> {
+  const paths: string[] = [];
+  const withPaths = rows.map((row) => {
+    const logo = extractStoragePath(row.logo_url);
+    const cover = extractStoragePath(row.cover_url);
+    if (logo) paths.push(logo);
+    if (cover) paths.push(cover);
+    return { row, logo, cover };
+  });
+  const map = await signStoragePaths(paths);
+  return withPaths.map(({ row, logo, cover }) => ({
+    ...row,
+    logo_url: logo ? map[logo] ?? null : null,
+    cover_url: cover ? map[cover] ?? null : null,
+  }));
+}
+
 export async function fetchNgos(): Promise<NgoRow[]> {
   const { data, error } = await supabase
     .from("ngos")
     .select("*")
     .order("created_at", { ascending: false });
   if (error) throw error;
-  return (data ?? []) as NgoRow[];
+  return resolveNgoImages((data ?? []) as NgoRow[]);
 }
 
 export async function fetchNgoBySlug(slug: string): Promise<NgoRow | null> {
@@ -87,7 +138,9 @@ export async function fetchNgoBySlug(slug: string): Promise<NgoRow | null> {
     .eq("slug", slug)
     .maybeSingle();
   if (error) throw error;
-  return (data as NgoRow) ?? null;
+  if (!data) return null;
+  const [resolved] = await resolveNgoImages([data as NgoRow]);
+  return resolved ?? null;
 }
 
 export async function fetchMyNgo(userId: string): Promise<NgoRow | null> {
@@ -99,5 +152,8 @@ export async function fetchMyNgo(userId: string): Promise<NgoRow | null> {
     .limit(1)
     .maybeSingle();
   if (error) throw error;
-  return (data as NgoRow) ?? null;
+  if (!data) return null;
+  const [resolved] = await resolveNgoImages([data as NgoRow]);
+  return resolved ?? null;
 }
+

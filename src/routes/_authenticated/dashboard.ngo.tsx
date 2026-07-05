@@ -31,7 +31,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/auth";
-import { fetchMyNgo, NGO_SERVICE_OPTIONS, type NgoRow } from "@/lib/ngos";
+import { fetchMyNgo, NGO_SERVICE_OPTIONS, extractStoragePath, type NgoRow } from "@/lib/ngos";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/dashboard/ngo")({
@@ -294,8 +294,9 @@ function ProfileForm({ ngo, onSaved }: { ngo: NgoRow; onSaved: () => void }) {
         emergency_support: f.emergency_support,
         languages: f.languages,
         nearby_landmark: f.nearby_landmark,
-        logo_url: f.logo_url,
-        cover_url: f.cover_url,
+        logo_url: extractStoragePath(f.logo_url),
+        cover_url: extractStoragePath(f.cover_url),
+
       })
       .eq("id", ngo.id);
     setSaving(false);
