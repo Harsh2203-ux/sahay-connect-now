@@ -103,13 +103,12 @@ function LawyerProfile() {
 
       <div className="container-x -mt-14 pb-16">
         <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 shadow-card sm:flex-row sm:items-end">
-          {lawyer.photo_url ? (
-            <img src={lawyer.photo_url} alt={lawyer.full_name} className="h-24 w-24 shrink-0 rounded-2xl border border-border object-cover" />
-          ) : (
-            <div className="grid h-24 w-24 shrink-0 place-items-center rounded-2xl bg-primary/10 text-2xl font-bold text-primary">
-              {initialsOf(lawyer.full_name)}
-            </div>
-          )}
+          <SmartImage
+            src={lawyer.photo_url}
+            fallbackSrc={LAWYER_PLACEHOLDER}
+            alt={lawyer.full_name}
+            className="h-24 w-24 shrink-0 rounded-2xl border border-border object-cover"
+          />
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <h1 className="truncate text-2xl font-extrabold tracking-tight">{lawyer.full_name}</h1>
