@@ -6,9 +6,10 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PageHero } from "@/components/site/PageHero";
-import { fetchLawyers, initialsOf, LAWYER_SPECIALIZATIONS, LAWYER_LANGUAGES, type LawyerRow } from "@/lib/lawyers";
+import { fetchLawyers, LAWYER_SPECIALIZATIONS, LAWYER_LANGUAGES, type LawyerRow } from "@/lib/lawyers";
 import { StarRating } from "@/components/site/StarRating";
 import { supabase } from "@/integrations/supabase/client";
+import { LAWYER_PLACEHOLDER, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/find-lawyers")({
   head: () => ({
