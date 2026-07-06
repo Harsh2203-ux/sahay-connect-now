@@ -20,6 +20,7 @@ import { fetchNgoBySlug, type NgoRow } from "@/lib/ngos";
 import { BookAppointmentDialog } from "@/components/site/BookAppointmentDialog";
 import { HelpRequestDialog } from "@/components/site/HelpRequestDialog";
 import { COVER_PLACEHOLDER, NGO_PLACEHOLDER, SmartImage } from "@/components/site/SmartImage";
+import { safeExternalHref } from "@/lib/utils";
 
 export const Route = createFileRoute("/ngos/$slug")({
   loader: async ({ params }) => {
