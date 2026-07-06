@@ -10,7 +10,6 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/dashboard/admin")({
   beforeLoad: async ({ context }) => {
-    const { redirect } = await import("@tanstack/react-router");
     const user = (context as { user?: { id: string } }).user;
     if (!user) throw redirect({ to: "/auth/login" });
     const { data, error } = await supabase
