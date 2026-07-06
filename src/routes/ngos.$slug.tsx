@@ -16,9 +16,10 @@ import {
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { fetchNgoBySlug, initialsOf, type NgoRow } from "@/lib/ngos";
+import { fetchNgoBySlug, type NgoRow } from "@/lib/ngos";
 import { BookAppointmentDialog } from "@/components/site/BookAppointmentDialog";
 import { HelpRequestDialog } from "@/components/site/HelpRequestDialog";
+import { COVER_PLACEHOLDER, NGO_PLACEHOLDER, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/ngos/$slug")({
   loader: async ({ params }) => {
