@@ -20,9 +20,10 @@ import {
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { fetchLawyerBySlug, initialsOf, type LawyerRow } from "@/lib/lawyers";
+import { fetchLawyerBySlug, type LawyerRow } from "@/lib/lawyers";
 import { fetchReviewsForLawyer, averageRating } from "@/lib/reviews";
 import { StarRating } from "@/components/site/StarRating";
+import { LAWYER_PLACEHOLDER, SmartImage } from "@/components/site/SmartImage";
 import { BookLawyerDialog } from "@/components/site/BookLawyerDialog";
 import { ReviewDialog } from "@/components/site/ReviewDialog";
 import { toast } from "sonner";
