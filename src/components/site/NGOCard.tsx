@@ -2,7 +2,8 @@ import { BadgeCheck, MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { initialsOf, type NgoRow } from "@/lib/ngos";
+import { type NgoRow } from "@/lib/ngos";
+import { NGO_PLACEHOLDER, SmartImage } from "@/components/site/SmartImage";
 
 /** Back-compat shape used by landing/showcase sections */
 export type NGO = {
@@ -15,19 +16,13 @@ export type NGO = {
 };
 
 function LogoBadge({ url, name }: { url?: string | null; name: string }) {
-  if (url) {
-    return (
-      <img
-        src={url}
-        alt={`${name} logo`}
-        className="h-14 w-14 shrink-0 rounded-xl border border-border object-cover bg-background"
-      />
-    );
-  }
   return (
-    <div className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-primary/10 text-base font-bold text-primary">
-      {initialsOf(name)}
-    </div>
+    <SmartImage
+      src={url}
+      fallbackSrc={NGO_PLACEHOLDER}
+      alt={`${name} logo`}
+      className="h-14 w-14 shrink-0 rounded-xl border border-border object-cover bg-background"
+    />
   );
 }
 

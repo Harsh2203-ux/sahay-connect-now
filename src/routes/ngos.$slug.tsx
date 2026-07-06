@@ -16,9 +16,10 @@ import {
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { fetchNgoBySlug, initialsOf, type NgoRow } from "@/lib/ngos";
+import { fetchNgoBySlug, type NgoRow } from "@/lib/ngos";
 import { BookAppointmentDialog } from "@/components/site/BookAppointmentDialog";
 import { HelpRequestDialog } from "@/components/site/HelpRequestDialog";
+import { COVER_PLACEHOLDER, NGO_PLACEHOLDER, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/ngos/$slug")({
   loader: async ({ params }) => {
@@ -78,24 +79,22 @@ function NgoProfile() {
     <SiteLayout>
       {/* Cover */}
       <div className="relative h-56 w-full bg-gradient-to-r from-primary/15 via-emerald/10 to-primary/10 sm:h-72">
-        {ngo.cover_url && (
-          <img src={ngo.cover_url} alt="" className="h-full w-full object-cover" />
-        )}
+        <SmartImage
+          src={ngo.cover_url}
+          fallbackSrc={COVER_PLACEHOLDER}
+          alt=""
+          className="h-full w-full object-cover"
+        />
       </div>
 
       <div className="container-x -mt-14 pb-16">
         <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 shadow-card sm:flex-row sm:items-end">
-          {ngo.logo_url ? (
-            <img
-              src={ngo.logo_url}
-              alt={`${ngo.name} logo`}
-              className="h-24 w-24 shrink-0 rounded-2xl border border-border bg-background object-cover"
-            />
-          ) : (
-            <div className="grid h-24 w-24 shrink-0 place-items-center rounded-2xl bg-primary/10 text-2xl font-bold text-primary">
-              {initialsOf(ngo.name)}
-            </div>
-          )}
+          <SmartImage
+            src={ngo.logo_url}
+            fallbackSrc={NGO_PLACEHOLDER}
+            alt={`${ngo.name} logo`}
+            className="h-24 w-24 shrink-0 rounded-2xl border border-border bg-background object-cover"
+          />
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <h1 className="truncate text-2xl font-extrabold tracking-tight">{ngo.name}</h1>

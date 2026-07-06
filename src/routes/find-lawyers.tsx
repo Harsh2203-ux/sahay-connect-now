@@ -6,9 +6,10 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PageHero } from "@/components/site/PageHero";
-import { fetchLawyers, initialsOf, LAWYER_SPECIALIZATIONS, LAWYER_LANGUAGES, type LawyerRow } from "@/lib/lawyers";
+import { fetchLawyers, LAWYER_SPECIALIZATIONS, LAWYER_LANGUAGES, type LawyerRow } from "@/lib/lawyers";
 import { StarRating } from "@/components/site/StarRating";
 import { supabase } from "@/integrations/supabase/client";
+import { LAWYER_PLACEHOLDER, SmartImage } from "@/components/site/SmartImage";
 
 export const Route = createFileRoute("/find-lawyers")({
   head: () => ({
@@ -169,13 +170,12 @@ function LawyerDBCard({ lawyer, rating }: { lawyer: LawyerRow; rating?: { avg: n
   return (
     <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-card">
       <div className="flex items-start gap-4">
-        {lawyer.photo_url ? (
-          <img src={lawyer.photo_url} alt={lawyer.full_name} className="h-14 w-14 shrink-0 rounded-full object-cover" />
-        ) : (
-          <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gradient-to-br from-primary/15 to-emerald/15 text-lg font-bold text-primary">
-            {initialsOf(lawyer.full_name)}
-          </div>
-        )}
+        <SmartImage
+          src={lawyer.photo_url}
+          fallbackSrc={LAWYER_PLACEHOLDER}
+          alt={lawyer.full_name}
+          className="h-14 w-14 shrink-0 rounded-full object-cover"
+        />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5">
             <h3 className="truncate text-base font-semibold text-foreground">{lawyer.full_name}</h3>
