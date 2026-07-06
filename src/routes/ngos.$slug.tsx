@@ -174,7 +174,7 @@ function NgoProfile() {
                   />
                 )}
                 {ngo.email && <InfoRow icon={Mail} label={ngo.email} href={`mailto:${ngo.email}`} />}
-                {ngo.website && <InfoRow icon={Globe} label={ngo.website} href={ngo.website} />}
+                {websiteHref && <InfoRow icon={Globe} label={ngo.website!} href={websiteHref} />}
               </ul>
             </Section>
             <Section title="Working hours">
