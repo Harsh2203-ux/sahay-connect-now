@@ -69,12 +69,13 @@ function NgoProfile() {
 
   const location = [ngo.address, ngo.city, ngo.state, ngo.pin_code].filter(Boolean).join(", ");
   const mapUrl =
-    ngo.google_maps_url ||
+    safeExternalHref(ngo.google_maps_url) ||
     (ngo.latitude != null && ngo.longitude != null
       ? `https://www.google.com/maps?q=${ngo.latitude},${ngo.longitude}`
       : location
         ? `https://www.google.com/maps?q=${encodeURIComponent(location)}`
         : null);
+  const websiteHref = safeExternalHref(ngo.website);
 
   return (
     <SiteLayout>
