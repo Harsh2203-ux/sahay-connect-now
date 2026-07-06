@@ -20,6 +20,7 @@ import { fetchNgoBySlug, type NgoRow } from "@/lib/ngos";
 import { BookAppointmentDialog } from "@/components/site/BookAppointmentDialog";
 import { HelpRequestDialog } from "@/components/site/HelpRequestDialog";
 import { COVER_PLACEHOLDER, NGO_PLACEHOLDER, SmartImage } from "@/components/site/SmartImage";
+import { safeExternalHref } from "@/lib/utils";
 
 export const Route = createFileRoute("/ngos/$slug")({
   loader: async ({ params }) => {
@@ -68,12 +69,13 @@ function NgoProfile() {
 
   const location = [ngo.address, ngo.city, ngo.state, ngo.pin_code].filter(Boolean).join(", ");
   const mapUrl =
-    ngo.google_maps_url ||
+    safeExternalHref(ngo.google_maps_url) ||
     (ngo.latitude != null && ngo.longitude != null
       ? `https://www.google.com/maps?q=${ngo.latitude},${ngo.longitude}`
       : location
         ? `https://www.google.com/maps?q=${encodeURIComponent(location)}`
         : null);
+  const websiteHref = safeExternalHref(ngo.website);
 
   return (
     <SiteLayout>
@@ -172,7 +174,7 @@ function NgoProfile() {
                   />
                 )}
                 {ngo.email && <InfoRow icon={Mail} label={ngo.email} href={`mailto:${ngo.email}`} />}
-                {ngo.website && <InfoRow icon={Globe} label={ngo.website} href={ngo.website} />}
+                {websiteHref && <InfoRow icon={Globe} label={ngo.website!} href={websiteHref} />}
               </ul>
             </Section>
             <Section title="Working hours">

@@ -27,6 +27,7 @@ import { LAWYER_PLACEHOLDER, SmartImage } from "@/components/site/SmartImage";
 import { BookLawyerDialog } from "@/components/site/BookLawyerDialog";
 import { ReviewDialog } from "@/components/site/ReviewDialog";
 import { toast } from "sonner";
+import { safeExternalHref } from "@/lib/utils";
 
 export const Route = createFileRoute("/lawyers/$slug")({
   loader: async ({ params }) => {
@@ -78,7 +79,7 @@ function LawyerProfile() {
 
   const location = [lawyer.office_address, lawyer.city].filter(Boolean).join(", ");
   const mapUrl =
-    lawyer.google_maps_url ||
+    safeExternalHref(lawyer.google_maps_url) ||
     (lawyer.latitude != null && lawyer.longitude != null
       ? `https://www.google.com/maps?q=${lawyer.latitude},${lawyer.longitude}`
       : location
