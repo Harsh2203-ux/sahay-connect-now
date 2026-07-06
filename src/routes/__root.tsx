@@ -94,6 +94,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Sahay — Trusted NGOs & Lawyers Near You" },
+      { name: "description", content: "Sahay connects people facing family, legal and social issues with verified NGOs and lawyers nearby. Find help, book appointments, and get support quickly." },
+      { property: "og:description", content: "Sahay connects people facing family, legal and social issues with verified NGOs and lawyers nearby. Find help, book appointments, and get support quickly." },
+      { name: "twitter:description", content: "Sahay connects people facing family, legal and social issues with verified NGOs and lawyers nearby. Find help, book appointments, and get support quickly." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/iGSJoeptqsMy4TUDMRHfaIedFLE2/social-images/social-1783357385958-image.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/iGSJoeptqsMy4TUDMRHfaIedFLE2/social-images/social-1783357385958-image.webp" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
