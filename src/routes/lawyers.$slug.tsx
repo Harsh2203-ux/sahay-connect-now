@@ -27,6 +27,7 @@ import { LAWYER_PLACEHOLDER, SmartImage } from "@/components/site/SmartImage";
 import { BookLawyerDialog } from "@/components/site/BookLawyerDialog";
 import { ReviewDialog } from "@/components/site/ReviewDialog";
 import { toast } from "sonner";
+import { safeExternalHref } from "@/lib/utils";
 
 export const Route = createFileRoute("/lawyers/$slug")({
   loader: async ({ params }) => {
